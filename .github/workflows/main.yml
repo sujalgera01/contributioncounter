@@ -26,4 +26,4 @@ jobs:
         $env:USER="sujalgera01"
 
         $CONTRIBUTIONS = git log --author="$env:USER" --since="1 month ago" --oneline | Measure-Object -Line | Select-Object -ExpandProperty Lines
-        echo "CONTRIBUTIONS=$CONTRIBUTIONS" | Out-File "C:\Users\sujal\OneDrive\Desktop\New folder\test.txt" $env:GITHUB_ENV -Encoding utf8 -Append
+        echo "CONTRIBUTIONS=$CONTRIBUTIONS" | Out-File -"C:\Users\sujal\OneDrive\Desktop\New folder\test.txt" $env:GITHUB_ENV -Encoding utf8 -Append
