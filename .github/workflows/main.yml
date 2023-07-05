@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
+      - name: Install Node.js
+        run: npm install
       - name: Install octokit
         run: npm install octokit
       - name: Get contributions
