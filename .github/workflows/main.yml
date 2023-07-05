@@ -1,29 +1,20 @@
-name: Count Contributions
-
+name: Find contributions
 on:
-  workflow_dispatch:
-
+  schedule:
+    - cron: '0 0 * * *'
 jobs:
-  count-contributions:
-    runs-on: windows-latest
-
+  find-contributions:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Count Contributions
-      id: count
-      run: |
-        $env:TOKEN="${{ secrets.GITHUB_TOKEN }}"
-        $env:USER="sujalgera01"
-
-        $CONTRIBUTIONS = git log --author="$env:USER" --since="1 month ago" --oneline | Measure-Object -Line | Select-Object -ExpandProperty Lines
-        echo "CONTRIBUTIONS=$CONTRIBUTIONS" | Out-File -"C:\Users\sujal\OneDrive\Desktop\New folder\test.txt" $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Install octokit
+        run: npm install octokit
+      - name: Get contributions
+        run: |
+          octokit = require('octokit')
+          contributions = octokit.repos.getContributions('sujalgera01', {
+            per_page: 100,
+            since: '1 week ago'
+          })
+          console.log(contributions)
